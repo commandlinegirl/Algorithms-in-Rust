@@ -1,0 +1,22 @@
+/*
+ * Level 2 
+ * Write a function that takes in a 2-D array that represents 
+ * a square matrix and returns the product of the diagonal of the matrix.
+ */
+
+    fn get_diagonal_product(matrix: [[i32; 2]; 2]) -> i32 {
+		
+        if (matrix.len() == 0 {
+		let mut result:i32 = 1;
+		
+		for i in 0..matrix.len() {
+		    result *= matrix[i][i];
+		}
+	
+		return result;
+	}
+	
+   fn main() {
+    	let m: [[i32; 2]; 2] = [[11,22],[33,44]];
+    	println!("Result: {}", get_diagonal_product(m));
+    }

@@ -1,5 +1,12 @@
 #![feature(collections)]
 
+/*
+ * Create a function called removeVowels() to remove all the vowels 
+ * in a given string. Both uppercase and lowercase vowels should be 
+ * removed. Your input will be a string and you should return 
+ * the string without any vowels.
+ */
+
 fn remove_vowels(s: &str) -> String {
     let mut new_str = String::from_str("");
 
