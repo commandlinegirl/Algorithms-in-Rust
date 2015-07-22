@@ -1,0 +1,19 @@
+#![feature(collections)]
+
+fn remove_vowels(s: &str) -> String {
+    let mut new_str = String::from_str("");
+
+    for c in s.chars() {
+      match c {
+        'a' | 'e' | 'i' | 'o' | 'u' | 'y'  => println!("{}", c),
+        _ => new_str.push(c),
+      }
+    }
+    return new_str;
+}
+
+fn main() {
+    let my_str = "My house";
+    let new_str = remove_vowels(my_str);
+    println!("Result: {}", new_str);
+}
