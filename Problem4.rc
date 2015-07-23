@@ -1,0 +1,52 @@
+/*
+Level 4 
+Write a function that accepts as input an array of integers 
+and then returns the length of the longest consecutive range of 
+integers that appear somewhere in that array. For example, 
+[16, 6, 12, 5, 4, 10, 2, 11, 13, 3, 15], it should return 5 
+(2,3,4,5,6 are all in the array so the longest range of 
+consecutive numbers is 5). What if you wanted to actually 
+return the numbers in the longest range (for example, for 
+this example, you would return [2,3,4,5,6]). Analyze the time 
+and space efficiency of your algorithm.
+ */
+ 
+fn get_longest_range(integers: &mut [i32]) -> i32 {
+		if integers.len() == 0 {
+			return 0;
+		}
+		integers.sort_by(|a, b| a.cmp(b));
+		
+		let mut longest: i32 = 0;
+		let mut previous: i32 = integers[0];
+		let mut current_longest: i32 = 1;
+		
+		for i in integers.iter() {
+			if *i - previous == 1 {
+				current_longest += 1;
+			}
+			else {
+				current_longest = 1;
+			}
+			
+			if current_longest > longest {
+				longest = current_longest;
+			}
+			previous = *i;
+		}
+		
+		return longest;
+	}
+	
+fn main() {
+    let mut my_array: [i32; 20] = [1,2,3,5,6,7,8,9,9,9,9,10,12,13,14,15,16,17,18,20];
+    let mut longest: i32 = get_longest_range(&mut my_array);
+    println!("The longest range is {} long.", longest);
+    assert!(longest == 7); 
+
+    let mut my_array2: [i32; 1] = [11];
+    longest = get_longest_range(&mut my_array2);
+    println!("The longest range is {} long.", longest);
+    assert!(longest == 1); 
+}
+
