@@ -1,3 +1,5 @@
+package GeneralTests;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,7 +16,7 @@ You can output your results as an array of strings
  */
 public class Problem6 {
 
-    public static List<List<Integer>> getSummingInts(List<Integer> list, List<List<Integer>> result) {
+    public static List<String> getSummingInts(List<Integer> list, List<String> result) {
         if (list == null || list.isEmpty() || result == null) {
             return null;
         }
@@ -29,49 +31,41 @@ public class Problem6 {
             for (int k = 1; k < i.size(); k++) {
                 newList.add(i.get(k));
             }
-            
-            result.add(newList);
+            String sum = list2String(newList);
+            if (!result.contains(sum)) {
+                result.add(sum);
+            }
             getSummingInts(newList, result);
         }
 
         return result;
     }
     
+    private static String list2String(List<Integer> list) {
+        List<Integer> intList = new ArrayList<>(list);
+        Collections.sort(intList);
+        StringBuilder sumString = new StringBuilder();
+        for (Integer i : intList) {
+            sumString.append(i);
+            sumString.append("+");
+        }
+        if (sumString.length() > 1) {
+            sumString.replace(sumString.length() - 1, sumString.length(), "");
+        }
+        return sumString.toString();
+    }
+
     public static List<String> getSumInts(Integer n) {
         if (n == null) {
             return null;
         }
-        
-        List<List<Integer>> result = getSummingInts(Arrays.asList(new Integer[] {n}), new ArrayList<List<Integer>>());
-        return getStringResults(result);
-    }
-    
-    private static List<String> getStringResults(List<List<Integer>> result) {
-        if (result == null) {
-            return null;
-        }
-        
-        List<String> sumStrings = new ArrayList<String>();
-        for (List<Integer> sumInts : result) {
-            Collections.sort(sumInts);
-            StringBuilder sumString = new StringBuilder();
-            for (Integer i : sumInts) {
-                sumString.append(i);
-                sumString.append("+");
-            }
-            if (sumString.length() > 1) {
-                sumString.replace(sumString.length() - 1, sumString.length(), "");
-            }
-            if (!sumStrings.contains(sumString.toString())) {
-                sumStrings.add(sumString.toString());
-            }
-        }    
-        return sumStrings;
+        return getSummingInts(Arrays.asList(new Integer[] {n}), new ArrayList<String>());
     }
 
     public static void main(String[] args) {
-        int i = 6;
+        int i = 4;
         List<String> sums = getSumInts(i);
         System.out.println(Arrays.toString(sums.toArray()));
     }
 }
+
