@@ -1,0 +1,66 @@
+/*
+ * Basic min heap implementation in Rust.
+ */
+
+struct MinHeap<'a> {
+    vector: &'a mut Vec<i32>,
+}
+
+impl<'a> MinHeap<'a> {
+    fn peek(&self) -> i32 {
+        return self.vector[0];
+    }
+
+    fn push(&mut self, i: i32) {
+        self.vector.push(i);
+        let last = self.vector.len() - 1;
+        self.push_min_heapify(last);
+    }
+
+    fn pop(&mut self) -> i32 {
+        let min = self.vector[0];
+        self.pop_min_heapify(0);
+        return min;
+    } 
+
+    fn is_empty(&self) -> bool {
+        return self.vector.len() == 0;
+    }
+
+    fn push_min_heapify(&mut self, i: usize) {
+        let p = ((i as i32 - 1)/2) as f32;
+        let parent = p.floor() as usize; 
+        if parent < self.vector.len() && self.vector[parent] > self.vector[i] {
+            self.vector.swap(parent, i);
+            self.push_min_heapify(parent);
+        }
+    }
+
+    fn pop_min_heapify(&mut self, i: usize) {
+        let left = i * 2 + 1;
+        let right = i * 2 + 2;
+        let mut min = i;
+
+        if left < self.vector.len() && self.vector[min] > self.vector[left] {
+            min = left;
+        }
+        if right < self.vector.len() && self.vector[min] > self.vector[right] {
+            min = right;
+        }
+        if i != min {
+            self.vector.swap(i, min);
+            self.pop_min_heapify(min);
+        }
+    }
+}
+
+fn main() {
+    let mut mh = MinHeap { vector: &mut vec![] };
+    println!("The heap is empty: {:?}", mh.is_empty());
+    mh.push(3);
+    mh.push(1);
+    mh.push(5);
+    mh.push(0);
+    println!("Result: {:?}", mh.vector);
+}
+
