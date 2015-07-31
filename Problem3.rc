@@ -16,8 +16,8 @@ struct MinStack<'a> {
 }
 
 impl<'a> MinStack<'a> {
-    fn peek(&self) -> i32 {
-        return self.vector[self.vector.len() - 1].value;
+    fn peek(&self) -> Option<i32> {
+        return self.vector.last().map(|element| element.value);
     }
 
     fn push(&mut self, i: i32) {
@@ -30,20 +30,16 @@ impl<'a> MinStack<'a> {
         self.vector.push(new_element);
     }
 
-    fn pop(&mut self) -> i32 {
-        return self.vector.pop().unwrap().value;
+    fn pop(&mut self) -> Option<i32> {
+        return self.vector.pop().map(|element| element.value);
     } 
 
     fn is_empty(&self) -> bool {
-        return self.vector.len() == 0;
+        return self.vector.is_empty();
     }
 
-    fn last_element(&self) -> &Element {
-        return &self.vector[self.vector.len() - 1];
-    }
-
-    fn get_min(&mut self) -> i32 {
-        return self.last_element().current_min;
+    fn get_min(&mut self) -> Option<i32> {
+        return self.vector.last().map(|element| element.current_min);
     }
 
 }
@@ -51,17 +47,19 @@ impl<'a> MinStack<'a> {
 fn main() {
     let mut ms = MinStack { vector: &mut vec![] };
     assert!(ms.is_empty() == true);
+    assert!(ms.peek() == None);
+    assert!(ms.pop() == None);
     ms.push(3);
     ms.push(2);
     ms.push(5);
     ms.push(1);
     ms.push(7);
-    assert!(ms.peek() == 7);
-    assert!(ms.get_min() == 1);
-    assert!(ms.pop() == 7);
-    assert!(ms.get_min() == 1);
-    assert!(ms.pop() == 1);
-    assert!(ms.get_min() == 2);
+    assert!(ms.peek() == Some(7));
+    assert!(ms.get_min() == Some(1));
+    assert!(ms.pop() == Some(7));
+    assert!(ms.get_min() == Some(1));
+    assert!(ms.pop() == Some(1));
+    assert!(ms.get_min() == Some(2));
     println!("Run OK.", )
 }
 
